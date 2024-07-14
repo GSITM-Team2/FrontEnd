@@ -3,15 +3,24 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
 import signin from './signIn';
+import seoulIllor from '../../../public/img/seoul.png'
+import Image from 'next/image'
 
 const SigninPage: React.FC = () => {
     const [isSignUp, setIsSignUp] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleSignIn = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.preventDefault();
         const signInEmail = (document.getElementById('signInEmail') as HTMLInputElement).value;
         const signInPassword = (document.getElementById('signInPassword') as HTMLInputElement).value;
-        await signin(signInEmail, signInPassword);
+        
+        try {
+            await signin(signInEmail, signInPassword);
+            setErrorMessage(''); 
+        } catch (error) {
+            setErrorMessage('이메일/비밀번호를 확인해주세요');
+        }
     };
 
     const handleSignUpClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -19,25 +28,21 @@ const SigninPage: React.FC = () => {
         window.location.href = '/signup'; // Sign Up 페이지로 이동
     };
 
-    const handleSignInClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        event.preventDefault();
-        setIsSignUp(false);
-    };
-
     return (
         <div>
+            <div className={styles.layout}>
             <div className={styles.container}>
-                <h1 className={styles.title}>{isSignUp ? 'SIGN UP' : 'SIGN IN'}</h1>
-                <ul className={styles.links}>
-                    <li className={styles.linkItem}>
-                        <a href="/signin" id="signin" className={styles.linkAnchor} onClick={handleSignInClick}>SIGN IN</a>
-                    </li>
-                    <li className={styles.linkItem}>
-                        <a href="/signup" id="signup" className={styles.linkAnchor} onClick={handleSignUpClick}>SIGN UP</a>
-                    </li>
-                </ul>
+                <div>
+                <Image
+                    src={seoulIllor}
+                    alt=''
+                    width={200}
+                    height={100}
+                />
+                </div>
+                <h1 className={styles.title}>CULTURE LAND</h1>
                 <form className={styles.form}>
-                    <div className={`${styles.inputBlock} ${isSignUp ? styles.signupInputBlock : styles.firstInputBlock}`}>
+                    <div className={styles.inputBlock}>
                         <input
                             type="email"
                             placeholder="Email"
@@ -53,6 +58,11 @@ const SigninPage: React.FC = () => {
                             id="signInPassword"
                         />
                     </div>
+                    {errorMessage && (
+                        <div className={styles.errorMessage}>
+                            {errorMessage}
+                        </div>
+                    )}
                     {isSignUp && (
                         <div className={styles.inputBlock}>
                             <input
@@ -68,10 +78,12 @@ const SigninPage: React.FC = () => {
                         className={styles.signinBtn}
                         type="submit"
                         onClick={handleSignIn}
-                    >
-                        {isSignUp ? 'Sign up' : 'Sign in'}
+                    >Sign in
                     </button>
                 </form>
+                <div className={styles.font2}> 아직 회원이 아니신가요?<b style={{paddingLeft: 30}} onClick={handleSignUpClick}>sign up</b>
+                </div>
+            </div>
             </div>
         </div>
     );
