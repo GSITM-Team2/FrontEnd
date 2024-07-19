@@ -2,6 +2,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import configurationInfo from "../firebase.js";
+import { use } from 'react';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -26,6 +27,7 @@ const Signin=(signInEmail, signInPassword) => {
   const errorCode = error.code;
   const errorMessage = error.message;
 })};
+
 
 export default Signin;
 
