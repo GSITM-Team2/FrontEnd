@@ -16,7 +16,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {/* 24.07.19 */}
+        <div
+          className={
+            "bg-indigo-50 desktop:w-screen desktop:h-screen flex justify-center"
+          }
+        >
+          <div className="bg-white desktop:w-screen flex flex-col">
+            {children}
+          </div>
+        </div>
+      </body>
     </html>
   );
 }
