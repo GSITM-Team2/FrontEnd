@@ -1,64 +1,62 @@
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   padding: 20px;
-  box-sizing: border-box;
-  flex-direction: column;
 }
 
 .heading {
   text-align: center;
   margin-bottom: 20px;
-  font-size: 50px;
 }
 
 .table-wrapper {
-  max-width: 100%;
-  overflow-x: auto;
-  max-height: 80vh;
+  margin-bottom: 40px;
 }
 
-.simpleTable {
-  width: 150%;
-  border-collapse: collapse;
-  table-layout: fixed;
+.boxes-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
-.simpleTable th, .simpleTable td {
+.box {
   border: 1px solid #ddd;
-  padding: 16px;
-  text-align: left;
+  border-radius: 8px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.simpleTable th {
-  background-color: #f4f4f4;
-  font-weight: bold;
+.box h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #333;
 }
 
-.simpleTable td {
-  width: 200px;
-}
-
-.simpleTable tr:nth-child(even) {
-  background-color: transparent;
-}
-
-.simpleTable tr:nth-child(odd) {
-  background-color: transparent;
-}
-
-.simpleTable tr:hover {
-  background-color: transparent;
-}
-
-.error {
-  color: red;
-  text-align: center;
+.box p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #666;
 }
 
 .noData {
   text-align: center;
   font-size: 18px;
+  color: #888;
+}
+
+.navigateButton {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #0070f3;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.navigateButton:hover {
+  background-color: #005bb5;
 }

@@ -1,4 +1,3 @@
-
 export interface IData {
   event_id: number;
   org_name: string;
@@ -41,6 +40,8 @@ export interface IData2 {
   is_free: string;
 }
 
+
+
 export async function getData<T>(path: string): Promise<T> {
   const host = "http://localhost:8080";
   const response = await fetch(`${host}${path}`);
@@ -58,4 +59,3 @@ export async function getData2<T>(path: string): Promise<T> {
   }
   return response.json();
 }
-
