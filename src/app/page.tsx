@@ -22,7 +22,7 @@ export default async function Page() {
       <div className="table-wrapper">
         <h2>Full Data</h2>
         {data.length === 0 ? (
-          <div className="noData">No data available</div>
+          <div className="noData">Null</div>
         ) : (
           <table className="simpleTable">
             <thead>
@@ -74,7 +74,7 @@ export default async function Page() {
       <div className="table-wrapper">
         <h2>Filtered Data (Guname: 종로구)</h2>
         {data2.length === 0 ? (
-          <div className="noData">No filtered data available</div>
+          <div className="noData">Null</div>
         ) : (
           <table className="simpleTable">
             <thead>
