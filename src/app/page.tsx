@@ -1,27 +1,59 @@
+'use client';
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { IData, getData } from "../api";
 import { IData2, getData2 } from "../api";
 import "./page.css";
-// import { getDetailData } from "./data-fetching";
 
-export default async function Page() {
-  let data: IData[] = [];
-  let data2: IData2[] = [];
+export default function Page() {
+  const [data, setData] = useState<IData[]>([]);
+  const [data2, setData2] = useState<IData2[]>([]);
+  const [guname, setGuname] = useState<string>("종로구");
+  const [filter, setFilter] = useState<string>("");
 
-  try {
-    data = await getData<IData[]>("/data");
-    data2 = await getData2<IData2[]>("/data/filter?guname=종로구");
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fullData = await getData<IData[]>("/data");
+        setData(fullData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-  // // 24.07.19
-  // const details = await getDetailData("/data");
-  // console.log(details);
+    fetchData();
+  }, []);
 
-return (
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilter(event.target.value);
+  };
+
+  const handleFilterClick = async () => {
+    setGuname(filter);
+    try {
+      const filteredData = await getData2<IData2[]>(`/data/filter?guname=${filter}`);
+      setData2(filteredData);
+    } catch (error) {
+      console.error("Error fetching filtered data:", error);
+    }
+  };
+
+  return (
     <div className="container">
       <h1 className="heading">컬쳐랜드 (모든 데이터)</h1>
+
+      <div className="input-wrapper">
+        <label htmlFor="guname-input">Filter by Guname:</label>
+        <input
+          id="guname-input"
+          type="text"
+          value={filter}
+          onChange={handleInputChange}
+          placeholder="Enter guname"
+        />
+        <button onClick={handleFilterClick}>필터 적용하기</button>
+      </div>
 
       <div className="table-wrapper">
         <h2>Full Data</h2>
@@ -43,7 +75,7 @@ return (
       </div>
 
       <div className="table-wrapper">
-        <h2>Filtered Data (Guname: 종로구)</h2>
+        <h2>Filtered Data (Guname: {guname})</h2>
         {data2.length === 0 ? (
           <div className="noData">No data available</div>
         ) : (
@@ -67,4 +99,3 @@ return (
     </div>
   );
 }
-

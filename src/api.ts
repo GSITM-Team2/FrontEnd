@@ -44,10 +44,18 @@ export interface IData2 {
 
 export async function getData<T>(path: string): Promise<T> {
   const host = "http://localhost:8080";
-  const response = await fetch(`${host}${path}`);
+  const url = `${host}${path}?t=${new Date().getTime()}`;
+
+  const response = await fetch(url, {
+    headers: {
+      'Cache-Control': 'no-cache',
+    },
+  });
+
   if (!response.ok) {
     throw new Error('Failed to fetch data');
   }
+
   return response.json();
 }
 
