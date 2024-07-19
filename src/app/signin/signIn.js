@@ -15,13 +15,14 @@ const auth = getAuth();
 
 
 const Signin = (signInEmail, signInPassword) => {
-    signInWithEmailAndPassword(auth, signInEmail, signInPassword)
+    return signInWithEmailAndPassword(auth, signInEmail, signInPassword)
         .then((userCredential) => {
             const user = userCredential.user;
             console.log(user);
         })
         .catch((error) => {
-            console.error('로그인실패', error.message);
+            console.error('로그인 실패', error.message);
+            throw new Error(error.message); 
         });
 };
 
