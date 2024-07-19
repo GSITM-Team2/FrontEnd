@@ -1,73 +1,64 @@
 .container {
-    padding: 20px;
-  }
-  
-  .heading {
-    text-align: center;
-    margin-bottom: 10px;
-    font-size: 50px;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  flex-direction: column;
+}
 
-  
-  .container {
-    padding: 30px;
-    font-family: Arial, sans-serif;
-  }
+.heading {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 50px;
+}
 
-  
-  .heading-wrapper {
-    text-align: right; 
-    margin-bottom: 10px;
-  }
-  
-  .heading {
-    font-size: 50px;
-    margin: 0; 
-  }
-  
-  
-  .simpleTable {
-    width: 150%;
-    border-collapse: collapse;
-    table-layout: fixed;
-  }
-  
-  .simpleTable th, .simpleTable td {
-    border: 1px solid #ddd;
-    padding: 16px; 
-    text-align: left;
-  }
-  
-  .simpleTable th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-  }
-  
-  .simpleTable td {
-  
-    width: 200px; 
-  }
-  
-  .simpleTable tr:nth-child(even) {
-    background-color: transparent;
-  }
-  
-  .simpleTable tr:nth-child(odd) {
-    background-color: transparent;
-  }
-  
-  .simpleTable tr:hover {
-    background-color: transparent;
-  }
-  
-  .error {
-    color: red;
-    text-align: center;
-  }
-  
-  .noData {
-    text-align: center;
-    font-size: 18px;
-  }
-  
-  /* Test 필요 */
+.table-wrapper {
+  max-width: 100%;
+  overflow-x: auto;
+  max-height: 80vh;
+}
+
+.simpleTable {
+  width: 150%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.simpleTable th, .simpleTable td {
+  border: 1px solid #ddd;
+  padding: 16px;
+  text-align: left;
+}
+
+.simpleTable th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.simpleTable td {
+  width: 200px;
+}
+
+.simpleTable tr:nth-child(even) {
+  background-color: transparent;
+}
+
+.simpleTable tr:nth-child(odd) {
+  background-color: transparent;
+}
+
+.simpleTable tr:hover {
+  background-color: transparent;
+}
+
+.error {
+  color: red;
+  text-align: center;
+}
+
+.noData {
+  text-align: center;
+  font-size: 18px;
+}
