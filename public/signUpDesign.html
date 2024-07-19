@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="./css/loginDesign.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="module" src="loginJS/loginDesign.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <!-- Heading -->
+            <h1>SIGN UP</h1>
+            
+            <!-- Links -->
+            <ul class="links">
+                <li>
+                    <a href="signUpDesign.html" id="signup">SIGN UP</a>
+                </li>
+                <li>
+                   <a href="signInDesign.html" id="signin">SIGN IN</a>
+                </li>
+            </ul>
+            
+              <!-- Form -->
+              <form action="" method="post">
+                <!-- email input -->
+                <div class="first-input input__block first-input__block">
+                    <input type="email" placeholder="Email" class="input" id="signUpEmail"/>
+                </div>
+                <!-- password input -->
+                <div class="input__block">
+                    <input type="password" placeholder="Password" class="input" id="passwordButton" />
+                </div>
+                
+                <!-- sign in button -->
+                <button class="signin__btn" type ="submit" id="signupButton">
+                    Sign up
+                </button>
+            </form>
+        </div>
+    </body>
+</html>
