@@ -1,6 +1,7 @@
 "use client";
 
 import { getDetailData } from "@/app/data-fetching";
+import tokenInfo from "../../signin/tokenInfo";
 
 export default async function Page({
   params,
@@ -32,6 +33,7 @@ export default async function Page({
         // email: "xxxaaa@gmail.com",
         // nickname: "테스트유저",
         // password: "afsdf123",
+        idToken : (tokenInfo)
       }),
     });
   };

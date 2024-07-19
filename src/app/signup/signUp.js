@@ -10,17 +10,15 @@ const firebaseConfig = configurationInfo();
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
- const Signup =(signUpemail, signUppassword)=>{
-        createUserWithEmailAndPassword(auth, signUpemail, signUppassword)
-        .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-            console.log("회원가입 성공")
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log("회원가입 실패")
-        });
-    };
+const Signup = (signUpEmail, signUpPassword)=>{createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  })};
     export default Signup;
