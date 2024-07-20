@@ -85,7 +85,7 @@ export default async function Page() {
         {data2.length === 0 ? (
           <div className="noData">Null</div>
         ) : (
-          <table className="simpleTable" style={{tableLayout:'fixed'}}>
+          <table className="simpleTable">
             <thead>
               <tr>
                 <th>Title</th>
