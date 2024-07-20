@@ -24,6 +24,7 @@ export default function Page() {
   const [isFiltered, setIsFiltered] = useState<boolean>(false);
 
 
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,6 +38,7 @@ export default function Page() {
 
     fetchData();
   }, []);
+  
 
 
 
@@ -183,5 +185,6 @@ export default function Page() {
         <button onClick={메인페이지이동} className="navigateButton">메인 페이지</button>
       </Link>
     </div>
+
   );
 }
