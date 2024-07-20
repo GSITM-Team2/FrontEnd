@@ -31,43 +31,48 @@ export default async function Page() {
           <table className="simpleTable">
             <thead>
               <tr>
-                <th>Event ID</th>
-                <th>Organization Name</th>
-                <th>Use Fee</th>
-                <th>Player</th>
-                <th>Game Name</th>
-                <th>Theme Code</th>
-                <th>Date</th>
-                <th>Additional Description</th>
-                <th>End Date</th>
+                {/* <th>Event ID</th> */}
+                {/* <th>Organization Name</th> */}
+                {/* <th>Use Fee</th> */}
+                {/* <th>Player</th> */}
+                {/* <th>Game Name</th> */}
+                {/* <th>Theme Code</th> */}
                 <th>Title</th>
-                <th>Code Name</th>
-                <th>User Target</th>
-                <th>Program</th>
-                <th>Start Date</th>
+                <th>Date</th>
                 <th>Place</th>
-                <th>Is Free</th>
+                <th>main_img</th>
+
+                {/* <th>Additional Description</th> */}
+                {/* <th>End Date</th> */}
+                {/* <th>Code Name</th> */}
+                {/* <th>User Target</th> */}
+                {/* <th>Program</th> */}
+                {/* <th>Start Date</th> */}
+                {/* <th>Is Free</th> */}
               </tr>
             </thead>
             <tbody>
               {data.map((item) => (
                 <tr key={item.event_id}>
-                  <td>{item.event_id}</td>
-                  <td>{item.org_name}</td>
-                  <td>{item.use_fee}</td>
-                  <td>{item.player}</td>
-                  <td>{item.guname}</td>
-                  <td>{item.themecode}</td>
-                  <td>{item.date}</td>
-                  <td>{item.etc_desc}</td>
-                  <td>{item.end_date}</td>
+                  {/* <td>{item.event_id}</td> */}
+                  {/* <td>{item.org_name}</td> */}
+                  {/* <td>{item.use_fee}</td> */}
+                  {/* <td>{item.player}</td> */}
+                  {/* <td>{item.guname}</td> */}
+                  {/* <td>{item.themecode}</td> */}
                   <td>{item.title}</td>
-                  <td>{item.codename}</td>
-                  <td>{item.user_trgt}</td>
-                  <td>{item.program}</td>
-                  <td>{item.start_date}</td>
+                  <td>{item.date}</td>
                   <td>{item.place}</td>
-                  <td>{item.is_free}</td>
+                  <td>
+                    <img src={item.main_img} alt="" />
+                  </td>
+                  {/* <td>{item.etc_desc}</td> */}
+                  {/* <td>{item.end_date}</td> */}
+                  {/* <td>{item.codename}</td> */}
+                  {/* <td>{item.user_trgt}</td> */}
+                  {/* <td>{item.program}</td> */}
+                  {/* <td>{item.start_date}</td> */}
+                  {/* <td>{item.is_free}</td> */}
                 </tr>
               ))}
             </tbody>
@@ -80,37 +85,44 @@ export default async function Page() {
         {data2.length === 0 ? (
           <div className="noData">Null</div>
         ) : (
-          <table className="simpleTable">
+          <table className="simpleTable" style={{tableLayout:'fixed'}}>
             <thead>
               <tr>
-                <th>Event ID</th>
-                <th>Organization Name</th>
-                <th>Use Fee</th>
-                <th>Player</th>
-                <th>Game Name</th>
-                <th>Theme Code</th>
-                <th>Date</th>
-                <th>Additional Description</th>
-                <th>End Date</th>
                 <th>Title</th>
-                <th>Code Name</th>
-                <th>User Target</th>
-                <th>Program</th>
-                <th>Start Date</th>
+                <th>Date</th>
                 <th>Place</th>
-                <th>Is Free</th>
+                <th>main_img</th>
+                {/* <th>Event ID</th> */}
+                {/* <th>Organization Name</th> */}
+                {/* <th>Use Fee</th> */}
+                {/* <th>Player</th> */}
+                {/* <th>Game Name</th> */}
+                {/* <th>Theme Code</th> */}
+                {/* <th>Date</th> */}
+                {/* <th>Additional Description</th> */}
+                {/* <th>End Date</th> */}
+                {/* <th>Code Name</th> */}
+                {/* <th>User Target</th> */}
+                {/* <th>Program</th> */}
+                {/* <th>Start Date</th> */}
+                {/* <th>Is Free</th> */}
               </tr>
             </thead>
             <tbody>
               {data2.map((item) => (
                 <tr key={item.event_id}>
-                  <td>{item.event_id}</td>
+                  <td>{item.title}</td>
+                  <td>{item.date}</td>
+                  <td>{item.place}</td>
+                  <td>
+                    <img src={item.main_img} alt="" />
+                  </td>
+                  {/* <td>{item.event_id}</td>
                   <td>{item.org_name}</td>
                   <td>{item.use_fee}</td>
                   <td>{item.player}</td>
                   <td>{item.guname}</td>
                   <td>{item.themecode}</td>
-                  <td>{item.date}</td>
                   <td>{item.etc_desc}</td>
                   <td>{item.end_date}</td>
                   <td>{item.title}</td>
@@ -119,7 +131,7 @@ export default async function Page() {
                   <td>{item.program}</td>
                   <td>{item.start_date}</td>
                   <td>{item.place}</td>
-                  <td>{item.is_free}</td>
+                  <td>{item.is_free}</td> */}
                 </tr>
               ))}
             </tbody>
