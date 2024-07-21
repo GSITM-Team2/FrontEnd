@@ -10,7 +10,7 @@ const SigninPage: React.FC = () => {
     const [isSignUp, setIsSignUp] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
-    const handleSignIn = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const signInEmail = (document.getElementById('signInEmail') as HTMLInputElement).value;
         const signInPassword = (document.getElementById('signInPassword') as HTMLInputElement).value;
@@ -19,7 +19,7 @@ const SigninPage: React.FC = () => {
             await Signin(signInEmail, signInPassword);
             setErrorMessage(''); 
         } catch (error) {
-            setErrorMessage('이메일/비밀번호를 확인해주세요');
+            setErrorMessage("아이디/비밀번호를 확인해주세요");
         }
     };
 
@@ -36,12 +36,12 @@ const SigninPage: React.FC = () => {
                 <Image
                     src={seoulIllor}
                     alt=''
-                    width={200}
-                    height={100}
+                    width={100}
+                    height={50}
                 />
                 </div>
                 <h1 className={styles.title}>CULTURE LAND</h1>
-                <form className={styles.form}>
+                <form className={styles.form} onSubmit={handleSignIn}>
                     <div className={styles.inputBlock}>
                         <input
                             type="email"
@@ -58,11 +58,11 @@ const SigninPage: React.FC = () => {
                             id="signInPassword"
                         />
                     </div>
-                    {errorMessage && (
+                    <div> {errorMessage && (
                         <div className={styles.errorMessage}>
                             {errorMessage}
                         </div>
-                    )}
+                    )}</div>
                     {isSignUp && (
                         <div className={styles.inputBlock}>
                             <input
@@ -77,7 +77,7 @@ const SigninPage: React.FC = () => {
                         id="signInButton"
                         className={styles.signinBtn}
                         type="submit"
-                        onClick={handleSignIn}
+                        // onClick={handleSignIn}
                     >Sign in
                     </button>
                 </form>
