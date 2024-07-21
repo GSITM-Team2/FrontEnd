@@ -1,7 +1,8 @@
 
 .layout{
   display: flex;
-  justify-content: center;
+  justify-content: center; 
+  width: 400px;
 }
 
 .errorMessage{
@@ -21,6 +22,7 @@
   color: rgba(98, 98, 98, 0.9);
   margin-top: 8px;
   display: flex;
+  font-size: 11px;
 }
 
 
@@ -42,7 +44,7 @@
   
   .title {
     color: #000000;
-    font-size: 40px;
+    font-size: 18px;
     font-Family: Pretendard, sans-serif;
     font-weight: 700;
     word-wrap: 'break-word';
@@ -65,11 +67,11 @@
   }
   
   .input {
-    width: 438px;
-    height: 60px; 
+    width: 250px;
+    height: 30px; 
     background: white;
-    border-radius: 30px;
-    border: 1px solid rgba(0, 0, 0, 0.18);
+    border-radius: 8px;
+    border: 0.8px solid rgba(0, 0, 0, 0.18);
     padding-left: 12px;
     margin-bottom: 5px;
   }
@@ -93,15 +95,16 @@
     margin-top: 15px;
     color: white;
     display: block;
-    width: 438px;
-    height: 60px;
+    width: 250px;
+    height: 45px;
     border-radius: 30px;
     border: none;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 16.5px;
     font-family: "Pretendard", sans-serif;
     box-shadow: 0 4px 5px #260a865c;
     transition: 0.2s linear;
+  
   }
   
   .signinBtn:hover {
@@ -121,23 +124,5 @@
     max-width: 680px;
   }
   
-  .separator::before {
-    content: "";
-    position: absolute;
-    top: 8px;
-    left: 0;
-    background: rgba(15, 19, 42, 0.2);
-    height: 1px;
-    width: 45%;
-  }
-  
-  .separator::after {
-    content: "";
-    position: absolute;
-    top: 8px;
-    right: 0;
-    background: rgba(15, 19, 42, 0.2);
-    height: 1px;
-    width: 45%;
-  }
+
   

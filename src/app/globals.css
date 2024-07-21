@@ -9,3 +9,5 @@ body {
 #__next {
   @apply h-full flex flex-col;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700&display=swap');
