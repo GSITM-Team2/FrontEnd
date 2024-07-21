@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import styles from './styles.module.css';
-import signin from './signIn';
+import Signin from './signIn';
 import seoulIllor from '../../../public/img/seoul.png'
 import Image from 'next/image'
 
@@ -16,7 +16,7 @@ const SigninPage: React.FC = () => {
         const signInPassword = (document.getElementById('signInPassword') as HTMLInputElement).value;
         
         try {
-            await signin(signInEmail, signInPassword);
+            await Signin(signInEmail, signInPassword);
             setErrorMessage(''); 
         } catch (error) {
             setErrorMessage('이메일/비밀번호를 확인해주세요');

@@ -33,7 +33,7 @@ export default async function Page({
         // email: "xxxaaa@gmail.com",
         // nickname: "테스트유저",
         // password: "afsdf123",
-        idToken: tokenInfo,
+        idToken: tokenInfo(),
       }),
     });
   };

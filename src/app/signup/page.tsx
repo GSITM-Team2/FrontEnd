@@ -47,7 +47,7 @@ const SignupPage: React.FC = () => {
                             type="email"
                             placeholder="Email"
                             className={styles.input}
-                            id="signInEmail"
+                            id="signUpEmail"
                         />
                     </div>
                     <div className={styles.inputBlock}>
@@ -55,7 +55,7 @@ const SignupPage: React.FC = () => {
                             type="password"
                             placeholder="Password"
                             className={styles.input}
-                            id="signInPassword"
+                            id="signUpPassword"
                         />
                     </div>
                     {isSignUp && (
@@ -69,14 +69,14 @@ const SignupPage: React.FC = () => {
                         </div>
                     )}
                     <button
-                        id="signInButton"
+                        id="signUpButton"
                         className={styles.signinBtn}
                         type="submit"
                         onClick={handleSignUp}
                     >Sign up
                     </button>
                 </form>
-                <div className={styles.font2}> 회원가입이 완료 되었습니다. <b style={{paddingLeft: 30}} onClick={handleSignInClick}>sign in</b>
+                <div className={styles.font2}><b onClick={handleSignInClick}>sign in</b>
                 </div>
             </div>
             </div>
