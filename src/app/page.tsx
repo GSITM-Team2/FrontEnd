@@ -1,166 +1,190 @@
+'use client';
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { IData, getData } from "../api";
 import { IData2, getData2 } from "../api";
 import "./page.css";
-import { getDetailData } from "./data-fetching";
+import Image from 'next/image';
+import seoulImage from '/public/img/seoul.png';
+import Head from 'next/head';
 
-export default async function Page() {
-  let data: IData[] = [];
-  let data2: IData2[] = [];
+const ITEMS_PER_PAGE = 12;
 
-  try {
-    data = await getData<IData[]>("/data");
-    data2 = await getData2<IData2[]>("/data/filter?guname=종로구");
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
+export default function Page() {
 
-  //24.07.19
-  const details = await getDetailData("/data");
-  console.log(details);
+  const [data, setData] = useState<IData[]>([]);
+  const [data2, setData2] = useState<IData2[]>([]);
+
+  const [guname, setGuname] = useState<string>("종로구");
+  const [filter, setFilter] = useState<string>("");
+
+  const [filterType, setFilterType] = useState<string>("guname"); 
+  const [currentPageFull, setCurrentPageFull] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isFiltered, setIsFiltered] = useState<boolean>(false);
+
+
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fullData = await getData<IData[]>("/data");
+        setData(fullData);
+      } catch (error) {
+        console.error("NullData1", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  
+
+
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilter(event.target.value);
+  };
+
+  const handleFilterTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilterType(event.target.value);
+  };
+
+
+
+  const handleFilterClick = async () => {
+    setGuname(filter);
+    setCurrentPage(1); 
+    setIsFiltered(true);
+    try {
+      const filteredData = await getData2<IData2[]>(`/data/filter?${filterType}=${filter}`);
+      setData2(filteredData);
+    } catch (error) {
+      console.error("NullData2", error);
+    }
+  };
+
+
+  //페이지 Slice 작업
+  const totalPagesFull = Math.ceil(data.length / ITEMS_PER_PAGE);
+  const paginatedDataFull = data.slice((currentPageFull - 1) * ITEMS_PER_PAGE, currentPageFull * ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(data2.length / ITEMS_PER_PAGE);
+  const paginatedData = data2.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+  const handlePageChangeFull = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPagesFull) {
+      setCurrentPageFull(newPage);
+    }
+  };
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
+
+
+  const 메인페이지이동 = () => {
+    setFilter("");
+    setGuname("");
+    setCurrentPage(1);
+    setCurrentPageFull(1);
+    setIsFiltered(false);
+  };
+
 
   return (
     <div className="container">
-      <h1 className="heading">컬쳐랜드 (모든 데이터)</h1>
-
-      <div className="table-wrapper">
-        <h2>Full Data</h2>
-        {data.length === 0 ? (
-          <div className="noData">Null</div>
-        ) : (
-          <table className="simpleTable">
-            <thead>
-              <tr>
-                {/* <th>Event ID</th> */}
-                {/* <th>Organization Name</th> */}
-                {/* <th>Use Fee</th> */}
-                {/* <th>Player</th> */}
-                {/* <th>Game Name</th> */}
-                {/* <th>Theme Code</th> */}
-                <th>Title</th>
-                <th>Date</th>
-                <th>Place</th>
-                <th>main_img</th>
-
-                {/* <th>Additional Description</th> */}
-                {/* <th>End Date</th> */}
-                {/* <th>Code Name</th> */}
-                {/* <th>User Target</th> */}
-                {/* <th>Program</th> */}
-                {/* <th>Start Date</th> */}
-                {/* <th>Is Free</th> */}
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((item) => (
-                <tr key={item.event_id}>
-                  {/* <td>{item.event_id}</td> */}
-                  {/* <td>{item.org_name}</td> */}
-                  {/* <td>{item.use_fee}</td> */}
-                  {/* <td>{item.player}</td> */}
-                  {/* <td>{item.guname}</td> */}
-                  {/* <td>{item.themecode}</td> */}
-                  <td>{item.title}</td>
-                  <td>{item.date}</td>
-                  <td>{item.place}</td>
-                  <td>
-                    <img src={item.main_img} alt="" />
-                  </td>
-                  {/* <td>{item.etc_desc}</td> */}
-                  {/* <td>{item.end_date}</td> */}
-                  {/* <td>{item.codename}</td> */}
-                  {/* <td>{item.user_trgt}</td> */}
-                  {/* <td>{item.program}</td> */}
-                  {/* <td>{item.start_date}</td> */}
-                  {/* <td>{item.is_free}</td> */}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+      <div className="header-container">
+        <img src="/img/seoul.png" alt="Seoul" className="header-image-large" />
       </div>
+      
+      <h1 className="heading">컬쳐랜드</h1>
 
-      <div className="table-wrapper">
-        <h2>Filtered Data (Guname: 종로구)</h2>
-        {data2.length === 0 ? (
-          <div className="noData">Null</div>
-        ) : (
-          <table className="simpleTable">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Date</th>
-                <th>Place</th>
-                <th>main_img</th>
-                {/* <th>Event ID</th> */}
-                {/* <th>Organization Name</th> */}
-                {/* <th>Use Fee</th> */}
-                {/* <th>Player</th> */}
-                {/* <th>Game Name</th> */}
-                {/* <th>Theme Code</th> */}
-                {/* <th>Date</th> */}
-                {/* <th>Additional Description</th> */}
-                {/* <th>End Date</th> */}
-                {/* <th>Code Name</th> */}
-                {/* <th>User Target</th> */}
-                {/* <th>Program</th> */}
-                {/* <th>Start Date</th> */}
-                {/* <th>Is Free</th> */}
-              </tr>
-            </thead>
-            <tbody>
-              {data2.map((item) => (
-                <tr key={item.event_id}>
-                  <td>{item.title}</td>
-                  <td>{item.date}</td>
-                  <td>{item.place}</td>
-                  <td>
-                    <img src={item.main_img} alt="" />
-                  </td>
-                  {/* <td>{item.event_id}</td>
-                  <td>{item.org_name}</td>
-                  <td>{item.use_fee}</td>
-                  <td>{item.player}</td>
-                  <td>{item.guname}</td>
-                  <td>{item.themecode}</td>
-                  <td>{item.etc_desc}</td>
-                  <td>{item.end_date}</td>
-                  <td>{item.title}</td>
-                  <td>{item.codename}</td>
-                  <td>{item.user_trgt}</td>
-                  <td>{item.program}</td>
-                  <td>{item.start_date}</td>
-                  <td>{item.place}</td>
-                  <td>{item.is_free}</td> */}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
+      <div className="input-wrapper">
+  <div className="search-bar-container">
+    <select id="filter-type" value={filterType} onChange={handleFilterTypeChange} className="filter-dropdown">
+      <option value="guname">자치구</option>
+      <option value="codename">분류</option>
+    </select>
+    <input
+      id="filter-input"
+      type="text"
+      value={filter}
+      onChange={handleInputChange}
+      className="search-bar"
+    />
+    <button onClick={handleFilterClick} className="filter-button">필터 적용하기</button>
+  </div>
+</div>
 
-      <Link href="/new">
-        <button className="navigateButton">페이지 가기</button>
-      </Link>
-
-      {/* 24.07.19 
-      이 밑에 div는 임시로 번호(event_id)를 클릭하면 
-      상세조회페이지로 넘어가게끔 만든것입니다.*/}
-      <div>
-        <div className="font-semibold">상세조회 페이지</div>
-        <div className="flex flex-col gap-4">
-          <div className="grid grid-cols-4">
-            <a href="">목록</a>
-            {/* .slice(0,10) 데이터가 너무 많이나와서
-          10개만 나오게끔 임시로 조정해놓았습니다.  */}
-            {details.slice(0, 10).map((d) => (
-              <a href={`/data/${d.event_id}`}>
-                <div>{d.event_id}</div>
-              </a>
-            ))}
+      {!isFiltered ? (
+        <>
+          <div className="table-wrapper">
+            <h2>모든 데이터</h2>
+            {data.length === 0 ? (
+              <div className="noData">Null</div>
+            ) : (
+              <div className="boxes-wrapper">
+                {paginatedDataFull.map((item) => (
+                  <div className="box" key={item.event_id}>
+                    <img src={item.main_img} alt={item.title} className="box-image" />
+                    <h3>{item.title}</h3>
+                    <p><strong>Event ID:</strong> {item.event_id}</p>
+                    <p><strong>Date:</strong> {item.date}</p>
+                    <p><strong>Place:</strong> {item.place}</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
+
+          <div className="pagination-controls">
+            <button onClick={() => handlePageChangeFull(currentPageFull - 1)} disabled={currentPageFull === 1}>
+              이전
+            </button>
+            <span>페이지 {currentPageFull} | {totalPagesFull}</span>
+            <button onClick={() => handlePageChangeFull(currentPageFull + 1)} disabled={currentPageFull === totalPagesFull}>
+              다음
+            </button>
+          </div>
+        </>
+      ) : (
+        <div className="table-wrapper">
+          <h2>{filterType === "codename" ? "분류" : "필터 적용: 자치구"} : {filter}
+          </h2>
+          {data2.length === 0 ? (
+            <div className="noData">Null</div>
+          ) : (
+            <div className="boxes-wrapper">
+              {paginatedData.map((item) => (
+                <div className="box" key={item.event_id}>
+                  <img src={item.main_img} alt={item.title} className="box-image" />
+                  <h3>{item.title}</h3>
+                  <p><strong>Event ID:</strong> {item.event_id}</p>
+                  <p><strong>Date:</strong> {item.date}</p>
+                  <p><strong>Place:</strong> {item.place}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-      </div>
+      )}
+
+      {isFiltered && (
+        <div className="pagination-controls">
+          <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+            이전
+          </button>
+          <span>패이지 {currentPage} | {totalPages}</span>
+          <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+            다음
+          </button>
+        </div>
+      )}
+
+      <Link href="/">
+        <button onClick={메인페이지이동} className="navigateButton">메인 페이지</button>
+      </Link>
     </div>
+
   );
 }
