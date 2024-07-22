@@ -1,19 +1,31 @@
+
+
+.font {
+  font-family: 'Pretendard', sans-serif;
+}
 .header-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  margin-top: 20px;
   
 }
 
 .header-image-large {
-  width: 50%;
-  max-width: 600px;
-  height: auto;
-  object-fit: cover;
-  display: block;
+ width: 100px;
+ height: 45px;
 }
-
+.title {
+  color: #000000;
+  font-size: 30px;
+  font-Family: Pretendard, sans-serif;
+  font-weight: 700;
+  word-wrap: 'break-word';
+  transition: 0.2s linear;
+  margin-top: 3px;
+  margin-bottom: 20px;
+  text-align: center;
+}
 .heading {
   font-family: 'Pretendard', sans-serif;
   font-size: 2.6rem; 
@@ -115,13 +127,14 @@
 }
 
 .navigateButton {
-  font-weight: bold;
+  font-weight: 500;
   color: black;
   text-decoration: none;
   cursor: pointer;
   text-align: center;
   display: block;
   margin: 20px auto;
+  font-family: 'Pretendard', sans-serif;
 }
 
 .navigateButton:hover {

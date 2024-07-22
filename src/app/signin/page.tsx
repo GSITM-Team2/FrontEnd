@@ -21,7 +21,7 @@ const SigninPage: React.FC = () => {
         try {
             const result = await Signin(signInEmail, signInPassword);
             if (result.success) {
-                window.location.href = '/';
+                window.location.href = '/main';
                 console.log("로그인 성공:", result.user);
                 setErrorMessage('');
             }
