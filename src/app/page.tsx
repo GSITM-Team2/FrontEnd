@@ -88,6 +88,9 @@ export default function Page() {
     setCurrentPageFull(1);
     setIsFiltered(false);
   };
+  const 북마크조회페이지이동 = () => {
+    fetch("http://localhost:8080/bookmark/showbookmarks/");
+  };
 
   return (
     <div className="container">
@@ -229,6 +232,11 @@ export default function Page() {
       <Link href="/">
         <button onClick={메인페이지이동} className="navigateButton">
           메인 페이지
+        </button>
+      </Link>
+      <Link href="/bookmark/showbookmarks">
+        <button onClick={북마크조회페이지이동} className="navigateButton">
+          북마크 보기
         </button>
       </Link>
     </div>

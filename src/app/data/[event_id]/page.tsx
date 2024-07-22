@@ -10,7 +10,8 @@ export default async function Page({
   const details = await getDetailData(`/data/${params.event_id}`);
   console.log(params);
   const onClick = async () => {
-    await fetch("http://localhost:8080/bookmark/", {
+    // await fetch("http://localhost:8080/bookmark/", {
+    await fetch("http://localhost:8080/bookmark/savebookmark", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -66,6 +67,7 @@ export default async function Page({
           <button
             className="bg-blue-400 text-white font-semibold text-xl rounded-md active:bg-blue-500 active:scale-95 p-2"
             onClick={onClick}
+            value={params.event_id}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
