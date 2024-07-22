@@ -1,31 +1,38 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import Signup from './signUp';
 import seoulIllor from '../../../public/img/seoul.png'
 import Image from 'next/image'
-
 const SignupPage: React.FC = () => {
     const [isSignUp, setIsSignUp] = useState(true);
+    const [passwordError, setPasswordError] = useState('');
 
-    const handleSignUp = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    useEffect(() => {
+        console.log('Password Error:', passwordError);
+    }, [passwordError]);
+
+    const handleSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const signUpEmail = (document.getElementById('signUpEmail') as HTMLInputElement).value;
         const signUpPassword = (document.getElementById('signUpPassword') as HTMLInputElement).value;
         const repeatPassword = (document.getElementById('repeatPassword') as HTMLInputElement).value;
 
         if (signUpPassword !== repeatPassword) {
-            console.log("비밀번호가 일치하지 않습니다.");
+            console.log('Setting password error');
+            setPasswordError('비밀번호가 일치하지 않습니다.');
             return;
         }
 
+        console.log('Clearing password error');
+        setPasswordError(''); 
         await Signup(signUpEmail, signUpPassword);
     };
 
     const handleSignInClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         event.preventDefault();
-        window.location.href = '/signin'; // Sign In 페이지로 이동
+        window.location.href = '/signin';
     };
 
     return (
@@ -36,12 +43,13 @@ const SignupPage: React.FC = () => {
                 <Image
                     src={seoulIllor}
                     alt=''
-                    width={200}
-                    height={100}
+                    width={120}
+                    height={60}
                 />
                 </div>
                 <h1 className={styles.title}>CULTURE LAND</h1>
-                <form className={styles.form}>
+                <div className={styles.intro}> 서울에 있는 모든 <b>행사 / 축제 / 공연</b><br></br>쉽게 찾아보기</div>
+                <form className={styles.form} onSubmit={handleSignUp}>
                     <div className={styles.inputBlock}>
                         <input
                             type="email"
@@ -68,11 +76,15 @@ const SignupPage: React.FC = () => {
                             />
                         </div>
                     )}
+                    {passwordError && (
+                        <div className={styles.errorMessage}>
+                            {passwordError}
+                        </div>
+                    )}
                     <button
                         id="signUpButton"
                         className={styles.signinBtn}
                         type="submit"
-                        onClick={handleSignUp}
                     >Sign up
                     </button>
                 </form>
