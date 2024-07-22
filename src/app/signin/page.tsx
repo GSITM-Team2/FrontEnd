@@ -2,13 +2,16 @@
 
 import React, { useState } from 'react';
 import styles from './styles.module.css';
-import Signin from './signIn';
 import seoulIllor from '../../../public/img/seoul.png'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation';
+import Signin from './signIn';
 
 const SigninPage: React.FC = () => {
     const [isSignUp, setIsSignUp] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const router = useRouter();
+
 
     const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -16,13 +19,17 @@ const SigninPage: React.FC = () => {
         const signInPassword = (document.getElementById('signInPassword') as HTMLInputElement).value;
         
         try {
-            await Signin(signInEmail, signInPassword);
-            setErrorMessage(''); 
-        } catch (error) {
-            setErrorMessage("아이디/비밀번호를 확인해주세요");
+            const result = await Signin(signInEmail, signInPassword);
+            if (result.success) {
+                window.location.href = '/';
+                console.log("로그인 성공:", result.user);
+                setErrorMessage('');
+            }
+        } catch (error: any) {
+            console.error("로그인 오류:", error);
+            setErrorMessage(error.error || "email / password를 확인해주세요.");
         }
     };
-
     const handleSignUpClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         event.preventDefault();
         window.location.href = '/signup'; // Sign Up 페이지로 이동
@@ -41,6 +48,7 @@ const SigninPage: React.FC = () => {
                 />
                 </div>
                 <h1 className={styles.title}>CULTURE LAND</h1>
+                <div className={styles.intro}> 서울에 있는 모든 <b>행사 / 축제 / 공연</b><br></br>쉽게 찾아보기</div>
                 <form className={styles.form} onSubmit={handleSignIn}>
                     <div className={styles.inputBlock}>
                         <input
@@ -77,7 +85,6 @@ const SigninPage: React.FC = () => {
                         id="signInButton"
                         className={styles.signinBtn}
                         type="submit"
-                        // onClick={handleSignIn}
                     >Sign in
                     </button>
                 </form>
