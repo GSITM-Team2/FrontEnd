@@ -2,12 +2,12 @@
 .layout{
   display: flex;
   justify-content: center; 
-  width: 400px;
+  width: 862px;
 }
 
 .errorMessage{
   color: #FF3333;
-  font-size: 15px;
+  font-size: 9px;
   font-family: Pretendard;
 
 }
@@ -44,17 +44,30 @@
   
   .title {
     color: #000000;
-    font-size: 18px;
+    font-size: 30px;
     font-Family: Pretendard, sans-serif;
     font-weight: 700;
     word-wrap: 'break-word';
     transition: 0.2s linear;
+    margin-top: 3px;
+    margin-bottom: 20px;
+  }
+  .intro{
+    
+    color: #0d1749d9;
+    font-size: 9px;
+    font-Family: Pretendard;
+    font-weight: 400;
+    word-wrap: 'break-word';
+    transition: 0.2s linear;
+    line-height: 15px;
+    text-align: center;
   }
  
   .form {
     width: 100%;
     max-width: 680px;
-    margin: 40px auto 10px;
+    margin: 25px auto 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -110,19 +123,7 @@
   .signinBtn:hover {
     box-shadow: 0 0 0 rgba(233, 30, 99, 0);
   }
-  
-  .separator {
-    display: block;
-    margin: 30px auto 10px;
-    text-align: center;
-    height: 40px;
-    position: relative;
-    background: transparent;
-    color: rgba(15, 19, 42, 0.4);
-    font-size: 13px;
-    width: 90%;
-    max-width: 680px;
-  }
+
   
 
   

@@ -1,10 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { IData, getData } from "../api";
-import { IData2, getData2 } from "../api";
+import { IData, getData } from "../../api";
+import { IData2, getData2 } from "../../api";
 import "./page.css";
 import Image from "next/image";
+import search from '../../../public/img/search.png'
+
 import seoulImage from "/public/img/seoul.png";
 import Head from "next/head";
 
@@ -98,7 +100,8 @@ export default function Page() {
         <img src="/img/seoul.png" alt="Seoul" className="header-image-large" />
       </div>
 
-      <h1 className="heading">컬쳐랜드</h1>
+      <h1 className="title">CULTURE LAND</h1>
+     
 
       <div className="input-wrapper">
         <div className="search-bar-container">
@@ -108,8 +111,8 @@ export default function Page() {
             onChange={handleFilterTypeChange}
             className="filter-dropdown"
           >
-            <option value="guname">자치구</option>
-            <option value="codename">분류</option>
+            <option className="font" value="guname">자치구</option>
+            <option className="font" value="codename">분류</option>
           </select>
           <input
             id="filter-input"
@@ -118,8 +121,13 @@ export default function Page() {
             onChange={handleInputChange}
             className="search-bar"
           />
-          <button onClick={handleFilterClick} className="filter-button">
-            필터 적용하기
+          <button onClick={handleFilterClick}>
+            <Image
+                    src={search}
+                    alt=''
+                    width={25}
+                    height={25}
+                />
           </button>
         </div>
       </div>
@@ -158,16 +166,16 @@ export default function Page() {
           </div>
 
           <div className="pagination-controls">
-            <button
+            <button className="font"
               onClick={() => handlePageChangeFull(currentPageFull - 1)}
               disabled={currentPageFull === 1}
             >
               이전
             </button>
-            <span>
+            <span className="font">
               페이지 {currentPageFull} | {totalPagesFull}
             </span>
-            <button
+            <button className="font"
               onClick={() => handlePageChangeFull(currentPageFull + 1)}
               disabled={currentPageFull === totalPagesFull}
             >
@@ -177,7 +185,7 @@ export default function Page() {
         </>
       ) : (
         <div className="table-wrapper">
-          <h2>
+          <h2 className="font">
             {filterType === "codename" ? "분류" : "필터 적용: 자치구"} :{" "}
             {filter}
           </h2>
@@ -218,7 +226,7 @@ export default function Page() {
             이전
           </button>
           <span>
-            패이지 {currentPage} | {totalPages}
+            페이지 {currentPage} | {totalPages}
           </span>
           <button
             onClick={() => handlePageChange(currentPage + 1)}
@@ -229,12 +237,12 @@ export default function Page() {
         </div>
       )}
 
-      <Link href="/">
-        <button onClick={메인페이지이동} className="navigateButton">
+      <Link href="/main">
+        <button  onClick={메인페이지이동} className="navigateButton">
           메인 페이지
         </button>
       </Link>
-      <Link href="/bookmark/showbookmarks">
+      <Link href="/bookmark/all">
         <button onClick={북마크조회페이지이동} className="navigateButton">
           북마크 보기
         </button>
