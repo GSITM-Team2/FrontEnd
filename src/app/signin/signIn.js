@@ -1,33 +1,3 @@
-// // Import the functions you need from the SDKs you need
-// import { initializeApp } from 'firebase/app';
-// import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-// import configurationInfo from "../firebase.js";
-// import { use } from 'react';
-
-// const firebaseConfig = configurationInfo();
-
-// // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// const auth = getAuth();
-
-
-// const Signin=(signInEmail, signInPassword) => {
-//     signInWithEmailAndPassword(auth, signInEmail, signInPassword)
-// .then((userCredential) => {
-//   // Signed in 
-//   const user = userCredential.user;
-//   console.log(user);
-//   // ...
-// })
-// .catch((error) => {
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-// })};
-
-
-// export default Signin;
-
-// Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import configurationInfo from "../firebase.js";
@@ -42,10 +12,8 @@ const Signin = (signInEmail, signInPassword) => {
     return new Promise((resolve, reject) => {
         signInWithEmailAndPassword(auth, signInEmail, signInPassword)
             .then((userCredential) => {
-                // 로그인 성공
                 const user = userCredential.user;
-                console.log(user);
-                resolve({success : true});
+                resolve({success: true, user});
             })
             .catch((error) => {
                 // 로그인 실패
@@ -65,4 +33,7 @@ const Signin = (signInEmail, signInPassword) => {
     });
 };
 
+
+
 export default Signin;
+

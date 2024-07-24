@@ -6,9 +6,12 @@ import seoulIllor from '../../../public/img/seoul.png'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import Signin from './signIn';
+import { useAuth } from '../../context/AuthContext';
+
+
 
 const SigninPage: React.FC = () => {
-    const [isSignUp, setIsSignUp] = useState(false);
+    const { setIdToken } = useAuth();
     const [errorMessage, setErrorMessage] = useState('');
     const router = useRouter();
 
@@ -16,13 +19,14 @@ const SigninPage: React.FC = () => {
     const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const signInEmail = (document.getElementById('signInEmail') as HTMLInputElement).value;
-        const signInPassword = (document.getElementById('signInPassword') as HTMLInputElement).value;
-        
+        const signInPassword = (document.getElementById('signInPassword') as HTMLInputElement).value
         try {
             const result = await Signin(signInEmail, signInPassword);
             if (result.success) {
-                window.location.href = '/main';
-                console.log("로그인 성공:", result.user);
+                const user = result.user; // user 객체를 직접 사용해야한다
+                const token = await user.getIdToken(); 
+                setIdToken(token);
+                router.push('/main');
                 setErrorMessage('');
             }
         } catch (error: any) {
@@ -30,6 +34,8 @@ const SigninPage: React.FC = () => {
             setErrorMessage(error.error || "email / password를 확인해주세요.");
         }
     };
+
+
     const handleSignUpClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         event.preventDefault();
         window.location.href = '/signup'; // Sign Up 페이지로 이동
@@ -71,16 +77,7 @@ const SigninPage: React.FC = () => {
                             {errorMessage}
                         </div>
                     )}</div>
-                    {isSignUp && (
-                        <div className={styles.inputBlock}>
-                            <input
-                                type="password"
-                                placeholder="Repeat Password"
-                                className={styles.input}
-                                id="repeatPassword"
-                            />
-                        </div>
-                    )}
+            
                     <button
                         id="signInButton"
                         className={styles.signinBtn}

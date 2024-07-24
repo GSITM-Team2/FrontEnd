@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { AuthProvider } from '../context/AuthContext'; // AuthProvider를 import 합니다.
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,7 +20,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="bg-indigo-50 desktop:w-screen desktop:h-screen flex justify-center">
           <div className="bg-white desktop:w-screen flex flex-col">
-            {children}
+            <AuthProvider> {/* AuthProvider로 children을 감쌉니다. */}
+              {children}
+            </AuthProvider>
           </div>
         </div>
       </body>
