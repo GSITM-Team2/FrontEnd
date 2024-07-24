@@ -237,12 +237,12 @@ export default function Page() {
         </div>
       )}
 
-      <Link href="/">
+      <Link href="/main">
         <button  onClick={메인페이지이동} className="navigateButton">
           메인 페이지
         </button>
       </Link>
-      <Link href="/bookmark/showbookmarks">
+      <Link href="/bookmark/all">
         <button onClick={북마크조회페이지이동} className="navigateButton">
           북마크 보기
         </button>
