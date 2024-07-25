@@ -49,7 +49,8 @@ export default function Page({ params }: { params: { id: string } }) {
     try {
       console.log(event_id);
       const response = await fetch("http://localhost:8080/bookmark/", {
-        method: "PATCH",
+        // method: "PATCH",
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
