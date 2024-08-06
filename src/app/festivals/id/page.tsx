@@ -4,17 +4,17 @@ import { useEffect, useState } from "react";
 import { getDetailData } from "@/app/data-fetching";
 import { useAuth } from '../../../context/AuthContext'; 
 
-export default function Page({ params }: { params: { event_id: string } }) {
+export default function Page({ params }: { params: { id: string } }) {
     const { idToken } = useAuth();
     const [details, setDetails] = useState<any>(null);
 
     useEffect(() => {
         const fetchData = async () => {
-            const fetchedDetails = await getDetailData(`/data/${params.event_id}`);
+            const fetchedDetails = await getDetailData(`/festivals/${params.id}`);
             setDetails(fetchedDetails);
         };
         fetchData();
-    }, [params.event_id]);
+    }, [params.id]);
 
     const onClick = async () => {
         await fetch("http://localhost:8080/bookmark/", {
@@ -24,7 +24,7 @@ export default function Page({ params }: { params: { event_id: string } }) {
             },
             body: JSON.stringify({
                 idToken: idToken,
-                eventId: Number(params.event_id)
+                id: Number(params.id)
             }),
         });
         console.log({idToken});
@@ -36,7 +36,7 @@ export default function Page({ params }: { params: { event_id: string } }) {
 
     return (
         <div className="min-h-screen flex flex-col">
-            <div>/data/{params.event_id}입니다</div>
+            <div>/data/{params.id}입니다</div>
 
             <div className="font-semibold">
                 <div>
@@ -64,7 +64,7 @@ export default function Page({ params }: { params: { event_id: string } }) {
                     <button
                         className="bg-blue-400 text-white font-semibold text-xl rounded-md active:bg-blue-500 active:scale-95 p-2"
                         onClick={onClick}
-                        value={params.event_id}
+                        value={params.id}
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

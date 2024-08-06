@@ -42,16 +42,7 @@
     align-items: center;
   }
   
-  .title {
-    color: #000000;
-    font-size: 30px;
-    font-Family: Pretendard, sans-serif;
-    font-weight: 700;
-    word-wrap: 'break-word';
-    transition: 0.2s linear;
-    margin-top: 3px;
-    margin-bottom: 20px;
-  }
+
   .intro{
     
     color: #0d1749d9;

@@ -2,12 +2,9 @@
 
 import React, { useState } from 'react';
 import styles from './styles.module.css';
-import seoulIllor from '../../../public/img/seoul.png'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import Signin from './signIn';
 import { useAuth } from '../../context/AuthContext';
-
 
 
 const SigninPage: React.FC = () => {
@@ -26,7 +23,7 @@ const SigninPage: React.FC = () => {
                 const user = result.user; // user 객체를 직접 사용해야한다
                 const token = await user.getIdToken(); 
                 setIdToken(token);
-                router.push('/main');
+                router.push('/test');
                 setErrorMessage('');
             }
         } catch (error: any) {
@@ -45,15 +42,14 @@ const SigninPage: React.FC = () => {
         <div>
             <div className={styles.layout}>
             <div className={styles.container}>
-                <div>
-                <Image
-                    src={seoulIllor}
-                    alt=''
-                    width={100}
-                    height={50}
-                />
+                    <div className={styles.logoContainer}>
+                <div className={styles.logoYear}>
+                <div className={styles.yearBackground}>
+                    <div className={styles.yearText}>2024</div>
                 </div>
-                <h1 className={styles.title}>CULTURE LAND</h1>
+                </div>
+                <div className={styles.logoText}>컬쳐랜드</div>
+            </div>
                 <div className={styles.intro}> 서울에 있는 모든 <b>행사 / 축제 / 공연</b><br></br>쉽게 찾아보기</div>
                 <form className={styles.form} onSubmit={handleSignIn}>
                     <div className={styles.inputBlock}>
