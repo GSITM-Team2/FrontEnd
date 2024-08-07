@@ -17,13 +17,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
       <body className={inter.className}>
-        <div className="bg-indigo-50 desktop:w-screen desktop:h-screen flex justify-center">
-          <div className="bg-white desktop:w-screen flex flex-col">
-            <AuthProvider> {/* AuthProvider로 children을 감쌉니다. */}
+        <div className="flex justify-center">
+        
+            <AuthProvider>
               {children}
             </AuthProvider>
-          </div>
+          
         </div>
       </body>
     </html>
