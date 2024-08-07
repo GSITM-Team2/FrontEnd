@@ -91,7 +91,7 @@ export default function Page() {
     setIsFiltered(false);
   };
   const 북마크조회페이지이동 = () => {
-    fetch("http://localhost:8080/bookmark/showbookmarks/");
+    fetch("http://localhost:8080/bookmark/all/");
   };
 
   return (
