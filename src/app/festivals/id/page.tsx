@@ -17,7 +17,7 @@ export default function Page({ params }: { params: { id: string } }) {
     }, [params.id]);
 
     const onClick = async () => {
-        await fetch("http://localhost:8080/bookmark/", {
+        await fetch("http://localhost:8080/bookmarks/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

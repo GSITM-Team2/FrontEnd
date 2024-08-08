@@ -1,11 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { IData, getData } from "../../api";
-import { IData2, getData2 } from "../../api";
+import { getData } from "../../api";
+import { FestivalDetail, getData2 } from "../../api";
 import "./page.css";
 import Image from "next/image";
-import search from '../../../public/img/search.png'
+import search from "../../../public/img/search.png";
 
 import seoulImage from "/public/img/seoul.png";
 import Head from "next/head";
@@ -13,8 +13,8 @@ import Head from "next/head";
 const ITEMS_PER_PAGE = 12;
 
 export default function Page() {
-  const [data, setData] = useState<IData[]>([]);
-  const [data2, setData2] = useState<IData2[]>([]);
+  const [data, setData] = useState<FestivalDetail[]>([]);
+  const [data2, setData2] = useState<FestivalDetail[]>([]);
 
   const [guname, setGuname] = useState<string>("종로구");
   const [filter, setFilter] = useState<string>("");
@@ -27,7 +27,7 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fullData = await getData<IData[]>("/data");
+        const fullData = await getData<FestivalDetail[]>("/festivals");
         setData(fullData);
       } catch (error) {
         console.error("NullData1", error);
@@ -52,8 +52,8 @@ export default function Page() {
     setCurrentPage(1);
     setIsFiltered(true);
     try {
-      const filteredData = await getData2<IData2[]>(
-        `/data/filter?${filterType}=${filter}`
+      const filteredData = await getData2<FestivalDetail[]>(
+        `/festivals/filter?${filterType}=${filter}`
       );
       setData2(filteredData);
     } catch (error) {
@@ -91,7 +91,7 @@ export default function Page() {
     setIsFiltered(false);
   };
   const 북마크조회페이지이동 = () => {
-    fetch("http://localhost:8080/bookmark/all/");
+    fetch("http://localhost:8080/bookmarks/all/");
   };
 
   return (
@@ -101,7 +101,6 @@ export default function Page() {
       </div>
 
       <h1 className="title">CULTURE LAND</h1>
-     
 
       <div className="input-wrapper">
         <div className="search-bar-container">
@@ -111,8 +110,12 @@ export default function Page() {
             onChange={handleFilterTypeChange}
             className="filter-dropdown"
           >
-            <option className="font" value="guname">자치구</option>
-            <option className="font" value="codename">분류</option>
+            <option className="font" value="guname">
+              자치구
+            </option>
+            <option className="font" value="codename">
+              분류
+            </option>
           </select>
           <input
             id="filter-input"
@@ -122,12 +125,7 @@ export default function Page() {
             className="search-bar"
           />
           <button onClick={handleFilterClick}>
-            <Image
-                    src={search}
-                    alt=''
-                    width={25}
-                    height={25}
-                />
+            <Image src={search} alt="" width={25} height={25} />
           </button>
         </div>
       </div>
@@ -141,16 +139,16 @@ export default function Page() {
             ) : (
               <div className="boxes-wrapper">
                 {paginatedDataFull.map((item) => (
-                  <a href={`/data/${item.event_id}`}>
-                    <div className="box" key={item.event_id}>
+                  <a href={`/data/${item.id}`}>
+                    <div className="box" key={item.id}>
                       <img
-                        src={item.main_img}
+                        src={item.mainImg}
                         alt={item.title}
                         className="box-image"
                       />
                       <h3>{item.title}</h3>
                       <p>
-                        <strong>Event ID:</strong> {item.event_id}
+                        <strong>Event ID:</strong> {item.id}
                       </p>
                       <p>
                         <strong>Date:</strong> {item.date}
@@ -166,7 +164,8 @@ export default function Page() {
           </div>
 
           <div className="pagination-controls">
-            <button className="font"
+            <button
+              className="font"
               onClick={() => handlePageChangeFull(currentPageFull - 1)}
               disabled={currentPageFull === 1}
             >
@@ -175,7 +174,8 @@ export default function Page() {
             <span className="font">
               페이지 {currentPageFull} | {totalPagesFull}
             </span>
-            <button className="font"
+            <button
+              className="font"
               onClick={() => handlePageChangeFull(currentPageFull + 1)}
               disabled={currentPageFull === totalPagesFull}
             >
@@ -194,15 +194,15 @@ export default function Page() {
           ) : (
             <div className="boxes-wrapper">
               {paginatedData.map((item) => (
-                <div className="box" key={item.event_id}>
+                <div className="box" key={item.id}>
                   <img
-                    src={item.main_img}
+                    src={item.mainImg}
                     alt={item.title}
                     className="box-image"
                   />
                   <h3>{item.title}</h3>
                   <p>
-                    <strong>Event ID:</strong> {item.event_id}
+                    <strong>Event ID:</strong> {item.id}
                   </p>
                   <p>
                     <strong>Date:</strong> {item.date}
@@ -238,11 +238,11 @@ export default function Page() {
       )}
 
       <Link href="/main">
-        <button  onClick={메인페이지이동} className="navigateButton">
+        <button onClick={메인페이지이동} className="navigateButton">
           메인 페이지
         </button>
       </Link>
-      <Link href="/bookmark/all">
+      <Link href="/bookmarks/all">
         <button onClick={북마크조회페이지이동} className="navigateButton">
           북마크 보기
         </button>
