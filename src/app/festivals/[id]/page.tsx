@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import "./page.css";
 import { getDetailData } from "@/app/data-fetching";
 import { useAuth } from "../../../context/AuthContext";
+import search from "../../../public/img/search.png";
 
 export default function Page({ params }: { params: { id: string } }) {
   const { idToken } = useAuth();
@@ -35,20 +37,39 @@ export default function Page({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div>/festivals/{params.id}입니다</div>
+    <div className="container">
+      {/* <div>/festivals/{params.id}입니다</div> */}
+      <div className="topbarcontainer">
+        <div className="logocontainer">
+          <img src="/img/culturelandlogo.png" alt="" width={105} height={28} />
+        </div>
+        <div className="search-layout">
+          <div className="search-bar">
+            <input
+              className="search-placeholder"
+              type="text"
+              placeholder="서울에 있는 모든 문화 행사 공연 정보를 검색해보세요"
+            ></input>
+          </div>
+          <span>
+            <button>
+              <img src="/img/search.png" alt="" width={28} height={28} />
+            </button>
+          </span>
+        </div>
+      </div>
 
-      <div className="font-semibold">
+      <div className="festival-detail-container">
         <div>
-          <div className="flex">
+          <div className="festival-align">           
+
+            <div className="flex flex-col gap-8">
             <img
               src={details.main_img}
               width="200"
               height="200"
               alt="image_not_found"
             />
-
-            <div className="flex flex-col gap-8">
               <div>
                 [{details.guname}] {details.title}
               </div>
