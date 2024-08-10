@@ -139,7 +139,7 @@ export default function Page() {
             ) : (
               <div className="boxes-wrapper">
                 {paginatedDataFull.map((item) => (
-                  <a href={`/data/${item.id}`}>
+                  <a href={`/festivals/${item.id}`}>
                     <div className="box" key={item.id}>
                       <img
                         src={item.mainImg}
