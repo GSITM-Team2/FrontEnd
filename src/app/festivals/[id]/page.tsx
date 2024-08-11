@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import "./page.css";
+import Link from "next/link";
 import { getDetailData } from "@/app/data-fetching";
 import { useAuth } from "../../../context/AuthContext";
 import search from "../../../public/img/search.png";
@@ -30,6 +31,9 @@ export default function Page({ params }: { params: { id: string } }) {
       }),
     });
     console.log({ idToken });
+  };
+  const onClickGoHome = async () => {
+    await fetch("http://localhost:8080/test");
   };
 
   if (!details) {
@@ -109,6 +113,11 @@ export default function Page({ params }: { params: { id: string } }) {
               </svg>
             </div>
           </button>
+          <Link href="/test">
+          <button className="button-goto-homepage" onClick={onClickGoHome}>
+            홈페이지 바로가기
+          </button>
+          </Link>
         </div>
       </div>
     </div>
