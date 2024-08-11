@@ -8,6 +8,7 @@ import noImage from "../../../public/img/noImage.png";
 import calendaer from "../../../public/img/calender.svg";
 import placeIcon from "../../../public/img/placeIcon.svg";
 import { Festival, getData } from "@/api";
+import Link from "next/link";
 
 interface PaginatedResponse<T> {
   festivals: T[];
@@ -202,7 +203,9 @@ export default function TestPage() {
       </div>
 
       <div className="toggle_layout">
-        <button className="my-bookmark">🔖북마크 보기</button>
+        <Link href="/bookmarks/all">
+          <button className="my-bookmark">🔖북마크 보기</button>
+        </Link>
         <div className="toggle-content">
           <Image src={toggle_active} alt="" width={51.82} height={27.8} />
           <span>&nbsp;&nbsp;진행중</span>
