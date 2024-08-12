@@ -19,15 +19,16 @@ export default function Page({ params }: { params: { id: string } }) {
     fetchData();
   }, [params.id]);
 
-  const onClick = async () => {
-    await fetch("http://localhost:8080/bookmarks/", {
+  const onClick = async () => {    
+    await fetch(`http://localhost:8080/bookmarks?festivalId=${Number(params.id)}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "idToken": `${idToken}`,
       },
       body: JSON.stringify({
-        idToken: idToken,
-        id: Number(params.id),
+        // idToken: idToken,
+        // id: Number(params.id),
       }),
     });
     console.log({ idToken });
@@ -114,9 +115,9 @@ export default function Page({ params }: { params: { id: string } }) {
             </div>
           </button>
           <Link href="/test">
-          <button className="button-goto-homepage" onClick={onClickGoHome}>
-            홈페이지 바로가기
-          </button>
+            <button className="button-goto-homepage" onClick={onClickGoHome}>
+              홈페이지 바로가기
+            </button>
           </Link>
         </div>
       </div>
