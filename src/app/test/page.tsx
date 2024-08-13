@@ -3,11 +3,11 @@ import React, { useEffect, useState, useRef } from 'react';
 import './test.css';
 import search from '../../../public/img/search.png';
 import Image from 'next/image';
-import toggle_active from '../../../public/img/toggle_active.svg';
 import noImage from '../../../public/img/noImage.png';
-import calendaer from '../../../public/img/calender.svg'
-import placeIcon from '../../../public/img/placeIcon.svg'
+import calendaer from '../../../public/img/calender.svg';
+import placeIcon from '../../../public/img/placeIcon.svg';
 import { Festival, getData } from '@/api';
+
 
 interface PaginatedResponse<T> {
   festivals: T[];
@@ -20,6 +20,7 @@ interface FestivalSearchParam {
   guname?: string;
   pageNumber: number;
   pageSize: number;
+  sort?: string;
 }
 
 export default function TestPage() {
@@ -29,6 +30,7 @@ export default function TestPage() {
   const [hasMore, setHasMore] = useState(true);
   const [theme, setTheme] = useState<string>('');
   const [place, setPlace] = useState<string>('');
+  const [top5Festivals, setTop5Festivals] = useState<Festival[]>([]);
   const observerRef = useRef<HTMLDivElement | null>(null);
   const PER_PAGE = 12;
 
@@ -39,7 +41,7 @@ export default function TestPage() {
       const params: FestivalSearchParam = {
         codename: theme !== '테마' ? theme : undefined,
         guname: place !== '장소' ? place : undefined,
-        pageNumber: pageNum + 1, // 백엔드에 1부터 시작하는 페이지 번호 전송
+        pageNumber: pageNum + 1,
         pageSize: PER_PAGE,
       };
       
@@ -57,6 +59,23 @@ export default function TestPage() {
       setLoading(false);
     }
   };
+  
+  const fetchTop5PopularFestivals = async () => {
+    try {
+      // 필요한 파라미터만 포함하여 쿼리 문자열 생성
+      const queryString = 'sort=POPULAR&pageNumber=1&pageSize=5';
+      console.log('Request URL:', `/festivals/filter?${queryString}`); // 요청 URL 확인
+      const data = await getData<PaginatedResponse<Festival>>(`/festivals/filter?${queryString}`);
+      console.log('API Response:', data); // API 응답 확인
+      setTop5Festivals(data.festivals);
+    } catch (error) {
+      console.error('Failed to fetch top 5 popular festivals:', error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchTop5PopularFestivals();
+  }, []);
 
   useEffect(() => {
     setPage(0);
@@ -93,8 +112,14 @@ export default function TestPage() {
     }
   }, [page]);
 
+  useEffect(() => {
+    fetchTop5PopularFestivals();
+  }, []);
+
+  
   return (
     <div className="container">
+      <div className = "header">
       <div className="logo-container">
         <div className="logo-year">
           <div className="year-background">
@@ -105,6 +130,7 @@ export default function TestPage() {
       </div>
       <div className='container-buttons'>
         <div className="button-container">
+        <button className='my-bookmark'>🔖북마크 보기</button>
           <div className="theme-button">
             <form action="#">
               <select 
@@ -182,71 +208,45 @@ export default function TestPage() {
               </select>
             </form>
           </div>
-
+         
           <div className='search-layout'>
             <div className='search-bar'>
-              <input className="search-placeholder" type ="text" placeholder='서울에 있는 모든 문화 행사 공연 정보를 검색해보세요'></input>
-            </div>
-            <span> 
+              <input className="search-placeholder" type ="text" placeholder='서울에 있는 모든 문화 행사 공연 정보찾기'></input>
+              
               <button>
                 <Image
                   src={search}
                   alt=''
-                  width={28}
-                  height={28}
+                  width={40}
+                  height={40}
                 />
               </button> 
-            </span>
+           
+            </div>
           </div>
         </div>
       </div>
-      
-      <div className='toggle_layout'>
-        <button className='my-bookmark'>🔖북마크 보기</button>
-        <div className='toggle-content'>
-          <Image
-            src={toggle_active}
-            alt=''
-            width={51.82}
-            height={27.80}
-          /> 
-          <span>&nbsp;&nbsp;진행중</span>
-        </div>
       </div>
-      
       <div className="top-title">🔥 컬쳐랜드 인기순위 TOP5 🔥</div>
       <div className='popular-overlay'>
-        <div className='popular-info'>
-          <div className='festival-component'>
-            <Image
-              src={noImage}
-              alt=''
-              width={285}
-              height={285}
-            /> 
-            <b>Title입니다</b>
-            <div style={{display : 'inline-flex'}}>
-              <Image
-                src={calendaer}
-                alt=''
-                width={13}
-                height={12}
-              />
-              <span>&nbsp;2012-10-20~2020-10-20</span>
-            </div>
-            <div style={{display : 'inline-flex'}}>
-              <Image
-                src={placeIcon}
-                alt=''
-                width={12}
-                height={15}
-              />
-              <span>&nbsp;강남어쩌구저쩌구아트홀</span>
-            </div>
-          </div>
+  {top5Festivals.map((festival) => (
+    <div key={festival.id} className='popular-info'>
+      <div className='popular-component'>
+        <Image
+          src={festival.mainImg || noImage}
+          alt={festival.title}
+          width={200}
+          height={200}
+        />
+        <div className='popular-overlay-content'>
+          <b className='popular-title'>{festival.title}</b>
+          <div>{festival.date}</div>
+          <div>{festival.place}</div>
         </div>
       </div>
-      
+    </div>
+  ))}
+</div>
       <div className="top-title">🔎 서울에 있는 모든 행사 찾기 🔎</div>
       <div className='festival-container'>
         <div className='festival-layout'>
