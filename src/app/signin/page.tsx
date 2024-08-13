@@ -1,5 +1,6 @@
 "use client";
 
+
 import React, { useState } from 'react';
 import styles from './styles.module.css';
 import { useRouter } from 'next/navigation';
@@ -7,11 +8,12 @@ import Signin from './signIn';
 import { useAuth } from '../../context/AuthContext';
 
 
-const SigninPage: React.FC = () => {
-    const { setIdToken } = useAuth();
-    const [errorMessage, setErrorMessage] = useState('');
-    const router = useRouter();
 
+
+const SigninPage: React.FC = () => {
+  const { setIdToken } = useAuth();
+  const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
 
     const handleSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -31,6 +33,15 @@ const SigninPage: React.FC = () => {
             setErrorMessage(error.error || "email / password를 확인해주세요.");
         }
     };
+
+
+
+  const handleSignUpClick = (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    window.location.href = "/signup"; // Sign Up 페이지로 이동
+  };
 
 
     const handleSignUpClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -83,10 +94,34 @@ const SigninPage: React.FC = () => {
                 </form>
                 <div className={styles.font2}> 아직 회원이 아니신가요?<b style={{paddingLeft: 30}} onClick={handleSignUpClick}>sign up</b>
                 </div>
+
             </div>
+            <div>
+              {" "}
+              {errorMessage && (
+                <div className={styles.errorMessage}>{errorMessage}</div>
+              )}
             </div>
+
+            <button
+              id="signInButton"
+              className={styles.signinBtn}
+              type="submit"
+            >
+              Sign in
+            </button>
+          </form>
+          <div className={styles.font2}>
+            {" "}
+            아직 회원이 아니신가요?
+            <b style={{ paddingLeft: 30 }} onClick={handleSignUpClick}>
+              sign up
+            </b>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default SigninPage;
