@@ -117,16 +117,24 @@ export default function Page() {
               분류
             </option>
           </select>
-          <input
+          <div className="search-bar-container">
+            <input
             id="filter-input"
             type="text"
             value={filter}
             onChange={handleInputChange}
             className="search-bar"
-          />
-          <button onClick={handleFilterClick}>
-            <Image src={search} alt="" width={25} height={25} />
-          </button>
+
+          /><button onClick={handleFilterClick}>
+          <Image
+                  src={search}
+                  alt=''
+                  width={20}
+                  height={20}
+              />
+        </button>
+          </div>
+
         </div>
       </div>
 
