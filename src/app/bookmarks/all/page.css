@@ -1,66 +1,94 @@
-.container {
-  position: relative;
-  margin-top: 80px;
+.bookmarks-layoutbox{
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
-.topbarcontainer {
-  width: 100%;
-  height: 100%;
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr 3fr;
 }
-.logocontainer {
+.layoutbox {
   display: flex;
-  flex-direction: row;
-  align-items: center;
   justify-content: center;
-  margin: 10px 50px 10px;
+  height: 100vh;
 }
-.search-layout {
+.festival-header {
+  width:100%; 
+  top: 0; 
+  display: flex;
+  justify-content: space-between;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  border-bottom : 0.5px solid #e5e7eb;
+  background-color: #ffffff;
+  flex-direction: row;
+}
+
+.festival-top-title {
+  color: black;
+  font-size: 22px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 700;
+  margin-bottom: 12px; 
+  margin-top: 43px;
+}
+
+.festival-logo-container {
+  display: flex;
+  flex-direction: column; 
+}
+
+.festival-logo-text {
+  text-align: center;
+  color: #FF4034;
+  font-size: 20px;
+  font-family: 'CookieRun', sans-serif;
+  font-weight: 700;
+}
+
+.festival-logo-year {
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  transform: rotate(-2.27deg);
+  margin-top: 3px; 
+}
+
+.festival-year-background {
+  background: #FF4034;
+  border-radius: 12px;
+  width: 42.74px; 
+  height: 14.70px;
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+}
+
+.festival-year-text {
+  color: rgba(252.08, 255, 108.80, 0.91);
+  font-size: 10px;
+  font-family: 'CookieRunOTF', sans-serif;
+  font-weight: 700;
+}
+.gomain{
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin: 10px 10px 10px;
-  max-width: 748px;
+  font-family: 'Pretendard',sans-serif;
+  color: #696767;
+  font-size: 12px;
 }
-.search-bar {
-  width: 100%;
-  height: 48px;
-  padding: 8px 16px;
-  left: 537px;
-  top: 0;
-  background: rgba(244.37, 244.37, 244.37, 1);
-  border-radius: 40px;
-  display: flex;
-}
-input {
-  color: black;
-  font-family: "Pretendard", sans-serif;
-  font-weight: 400;
-  font-size: 17px;
-  width: 100%;
-  background: rgba(244.37, 244.37, 244.37, 1);
-}
-input::placeholder {
-  color: rgba(0, 0, 0, 0.37);
-  font-family: "Pretendard", sans-serif;
-  font-weight: 400;
-  font-size: 17px;
-}
+
 .bookmarks-container {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 20px;
   margin-top: 15px;
 }
+
+
 .bookmarks-layout {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
-  justify-content: center;
+
 }
 .single-bookmark {
   background-color: #ffffff;
@@ -110,4 +138,17 @@ input::placeholder {
   flex-direction: row;
   /* justify-content: center; */
   align-items: center;
+}
+.no-bookmarks {
+  font-family: 'Pretendard', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #555; /* 텍스트 색상 */
+  margin-top:170%
+}
+.no-bookmarks img {
+  margin-bottom: 10px;
 }
