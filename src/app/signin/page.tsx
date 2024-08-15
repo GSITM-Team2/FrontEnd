@@ -39,16 +39,12 @@ const SigninPage: React.FC = () => {
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     event.preventDefault();
-    window.location.href = "/signup"; // Sign Up 페이지로 이동
+    window.location.href = "/signup"; 
   };
 
-  // const handleSignUpClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-  //     event.preventDefault();
-  //     window.location.href = '/signup'; // Sign Up 페이지로 이동
-  // };
 
   return (
-    <div>
+    <div className={styles.signinLayout}>
       <div className={styles.layout}>
         <div className={styles.container}>
           <div className={styles.logoContainer}>
@@ -111,21 +107,8 @@ const SigninPage: React.FC = () => {
           )}
         </div>
 
-        {/* <button id="signInButton" className={styles.signinBtn} type="submit">
-          Sign in
-        </button> */}
-        {/* </form>
-          <div className={styles.font2}>
-            {" "}
-            아직 회원이 아니신가요?
-            <b style={{ paddingLeft: 30 }} onClick={handleSignUpClick}>
-              sign up
-            </b>
-          </div>
-        </div> */}
       </div>
     </div>
   );
 };
-
 export default SigninPage;

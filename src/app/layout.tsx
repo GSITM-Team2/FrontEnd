@@ -21,13 +21,12 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className={inter.className}>
-        <div className="flex justify-center">
+      
         
             <AuthProvider>
               {children}
             </AuthProvider>
           
-        </div>
       </body>
     </html>
   );

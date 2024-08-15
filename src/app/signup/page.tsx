@@ -36,19 +36,22 @@ const SignupPage: React.FC = () => {
     };
 
     return (
-        <div>
+        <div className={styles.signinLayout}>
             <div className={styles.layout}>
             <div className={styles.container}>
-                <div>
-                <Image
-                    src={seoulIllor}
-                    alt=''
-                    width={120}
-                    height={60}
-                />
-                </div>
-                <h1 className={styles.title}>CULTURE LAND</h1>
-                <div className={styles.intro}> 서울에 있는 모든 <b>행사 / 축제 / 공연</b><br></br>쉽게 찾아보기</div>
+            <div className={styles.logoContainer}>
+            <div className={styles.logoYear}>
+              <div className={styles.yearBackground}>
+                <div className={styles.yearText}>2024</div>
+              </div>
+            </div>
+            <div className={styles.logoText}>컬쳐랜드</div>
+          </div>
+          <div className={styles.intro}>
+            {" "}
+            서울에 있는 모든 <b>행사 / 축제 / 공연</b>
+            <br></br>쉽게 찾아보기
+          </div>
                 <form className={styles.form} onSubmit={handleSignUp}>
                     <div className={styles.inputBlock}>
                         <input

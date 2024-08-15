@@ -1,4 +1,7 @@
-
+.signinLayout{
+  display: flex;
+  justify-content: center; 
+}
 .layout{
   display: flex;
   justify-content: center; 
@@ -41,17 +44,60 @@
     margin: 120px auto;
     align-items: center;
   }
+
+    
+.logoContainer {
+  width: 339px;
+  height: 101px;
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  margin-bottom: 45px; 
+}
   
+  .logoText {
+    text-align: center;
+    color: #FF4034;
+    font-size: 52px;
+    font-family: 'CookieRun', sans-serif;
+    font-weight: 700;
+
+}
+
+.logoYear {
+    display: flex;
+    align-items: center; 
+    transform: rotate(-2.27deg);
+    margin-top: 5px; 
+}
+
+.yearBackground {
+    background: #FF4034;
+    border-radius: 13px;
+    width: 56.74px;
+    height: 20.70px;
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+}
+
+.yearText {
+    color: rgba(252.08, 255, 108.80, 0.91);
+    font-size: 13px;
+    font-family: 'CookieRunOTF', sans-serif;
+    font-weight: 700;
+}
+
 
   .intro{
     
     color: #0d1749d9;
-    font-size: 9px;
+    font-size: 15px;
     font-Family: Pretendard;
     font-weight: 400;
     word-wrap: 'break-word';
     transition: 0.2s linear;
-    line-height: 15px;
+    line-height: 18px;
     text-align: center;
   }
  
@@ -95,7 +141,7 @@
   }
   
   .signinBtn {
-    background: #041879f4;
+    background: #FF4034;
     margin-top: 15px;
     color: white;
     display: block;
@@ -106,7 +152,7 @@
     cursor: pointer;
     font-size: 16.5px;
     font-family: "Pretendard", sans-serif;
-    box-shadow: 0 4px 5px #260a865c;
+    box-shadow: 0 4px 5px #bbbabd5c;
     transition: 0.2s linear;
   
   }

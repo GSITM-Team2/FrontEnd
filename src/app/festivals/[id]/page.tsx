@@ -5,11 +5,12 @@ import "./page.css";
 import Link from "next/link";
 import { getDetailData } from "@/app/data-fetching";
 import { useAuth } from "../../../context/AuthContext";
-import search from "../../../public/img/search.png";
+import Image from 'next/image';
 
-export default function Page({ params }: { params: { id: string } }) {
+export default function Page({ params }: { params: { id: number } }) {
   const { idToken } = useAuth();
   const [details, setDetails] = useState<any>(null);
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,108 +20,123 @@ export default function Page({ params }: { params: { id: string } }) {
     fetchData();
   }, [params.id]);
 
-  const onClick = async () => {    
-    await fetch(`http://localhost:8080/bookmarks?festivalId=${Number(params.id)}`, {
-      method: "POST",
-      headers: {
+  const toggleBookmark = async () => {
+    if (!idToken) {
+      alert("로그인이 필요한 기능입니다. 로그인 해주세요.");
+      return;
+    }
+  
+    try {
+      const url = `http://localhost:8080/bookmarks?festivalId=${params.id}`;
+      const method = isBookmarked ? "DELETE" : "POST";
+      
+      const headers: HeadersInit = {
         "Content-Type": "application/json",
-        "idToken": `${idToken}`,
-      },
-      body: JSON.stringify({
-        // idToken: idToken,
-        // id: Number(params.id),
-      }),
-    });
-    console.log({ idToken });
+        "idToken": idToken
+      };
+  
+      console.log("Sending request:", { url, method, headers });
+  
+      const response = await fetch(url, {
+        method: method,
+        headers: headers,
+      });
+  
+      console.log("Response status:", response.status);
+      const responseBody = await response.text();
+      console.log("Response body:", responseBody);
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}, body: ${responseBody}`);
+      }
+  
+      setIsBookmarked(!isBookmarked);
+    } catch (error) {
+      console.error("Error :", error);
+      alert("북마크 처리 중 오류가 발생했습니다.");
+    }
   };
+
   const onClickGoHome = async () => {
     await fetch("http://localhost:8080/test");
   };
 
   if (!details) {
-    return <div>Loading...</div>;
+    return <div className="loading">Loading...</div>;
   }
 
   return (
-    <div className="container">
-      {/* <div>/festivals/{params.id}입니다</div> */}
-      <div className="topbarcontainer">
-        <div className="logocontainer">
-          <img src="/img/culturelandlogo.png" alt="" width={105} height={28} />
-        </div>
-        <div className="search-layout">
-          <div className="search-bar">
-            <input
-              className="search-placeholder"
-              type="text"
-              placeholder="서울에 있는 모든 문화 행사 공연 정보를 검색해보세요"
-            ></input>
-          </div>
-          <span>
-            <button>
-              <img src="/img/search.png" alt="" width={28} height={28} />
-            </button>
-          </span>
-        </div>
-      </div>
-
-      <div className="festival-detail-container">
-        <div>
-          <div>
-            <div className="festival-align">
-              <div className="festival-info-container">
-                <div className="festival-title">{details.title}</div>
-                <div>{details.codename}</div>
-                <div>{details.date}</div>
-                <div>{details.orgName}</div>
-                <div>서울특별시 {details.guname}</div>
-                <div>{details.place}</div>
-                <div>
-                  <br />
-                </div>
-                <div>{details.user_trgt}</div>
-                <div>{details.use_fee}</div>
+    <>
+    <div className="layout">
+      <Link href="/test">
+        <header className="festival-header">
+          <div className="festival-logo-container">
+            <div className="festival-logo-year">
+              <div className="festival-year-background">
+                <div className="festival-year-text">2024</div>
               </div>
-              <div className="festival-image-container">
-                <img src={details.main_img} alt="image_not_found" />
+            </div>
+            <div className="festival-logo-text">컬쳐랜드</div>
+          </div>
+        </header>
+      </Link>
+      <div className="h-container">
+        <div className="festival-detail-main">
+          <h1 className="festival-detail-title">{details.title}</h1>
+          
+          <div className="festival-detail-content">
+            <div className="festival-detail-image-container">
+              <img src={details.main_img} alt={details.title} className="festival-detail-image" />
+            </div>
+            
+            <div className="festival-detail-info">
+              <div className="festival-detail-section">
+                <h2>행사 정보</h2>
+                <div className="festival-detail-item"><strong>카테고리:</strong> {details.codename}</div>
+                <div className="festival-detail-item"><strong>진행기간:</strong> {details.date}</div>
+                <div className="festival-detail-item"><strong>주최:</strong> {details.orgName}</div>
+              </div>
+              
+              <div className="festival-detail-section">
+                <h2>위치 및 대상</h2>
+                <div className="festival-detail-item"><strong>위치:</strong> 서울특별시 {details.guname}</div>
+                <div className="festival-detail-item"><strong>장소:</strong> {details.place}</div>
+                <div className="festival-detail-item"><strong>대상:</strong> {details.user_trgt}</div>
+              </div>
+              
+              <div className="festival-detail-section">
+                <h2>이용 정보</h2>
+                <div className="festival-detail-item"><strong>이용료:</strong> {details.use_fee}</div>
+              </div>
+              
+              <div className="festival-detail-button-container">
+                <button className="festival-detail-button-main" onClick={toggleBookmark}>
+                  <span className="festival-detail-bookmark-text">북마크 {isBookmarked ? '삭제' : '저장'}</span>
+                  <span className="festival-detail-bookmark-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                      <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z" 
+                        fill={isBookmarked ? "currentColor" : "none"} 
+                        stroke="currentColor" 
+                        strokeWidth="2"/>
+                    </svg>
+                  </span>
+                </button>
+                <Link href="/test">
+                  <button className="festival-detail-button-homepage" onClick={onClickGoHome}>
+                    <span className="festival-detail-globe-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" width="16" height="16">
+                        <path fill="currentColor" d="M336.5 160C322 70.7 287.8 8 248 8s-74 62.7-88.5 152h177zM152 256c0 22.2 1.2 43.5 3.3 64h185.3c2.1-20.5 3.3-41.8 3.3-64s-1.2-43.5-3.3-64H155.3c-2.1 20.5-3.3 41.8-3.3 64zm324.7-96c-28.6-67.9-86.5-120.4-158-141.6 24.4 33.8 41.2 84.7 50 141.6h108zM177.2 18.4C105.8 39.6 47.8 92.1 19.3 160h108c8.7-56.9 25.5-107.8 49.9-141.6zM487.4 192H372.7c2.1 21 3.3 42.5 3.3 64s-1.2 43-3.3 64h114.6c5.5-20.5 8.6-41.8 8.6-64s-3.1-43.5-8.6-64zM120 256c0-21.5 1.2-43 3.3-64H8.6C3.2 212.5 0 233.8 0 256s3.2 43.5 8.6 64h114.6c-2-21-3.2-42.5-3.2-64zm39.5 96c14.5 89.3 48.7 152 88.5 152s74-62.7 88.5-152h-177zm159.3 141.6c71.4-21.2 129.4-73.7 158-141.6h-108c-8.8 56.9-25.6 107.8-50 141.6zM19.3 352c28.6 67.9 86.5 120.4 158 141.6-24.4-33.8-41.2-84.7-50-141.6h-108z"/>
+                    </svg>
+                  </span>
+                  홈페이지 바로가기
+                </button>
+              </Link>
               </div>
             </div>
           </div>
-        </div>
-        <br />
-        <div>
-          <button className="button-main" onClick={onClick} value={params.id}>
-            <div className="bookmark-text">북마크 저장하기</div>
-            <div className="bookmark-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="19"
-                height="23"
-                viewBox="0 0 19 23"
-                fill="none"
-              >
-                <mask id="path-1-inside-1_162_18" fill="white">
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M19 1.5C19 0.671573 18.3284 0 17.5 0H1.5C0.671573 0 0 0.671575 0 1.5V20.7024C0 21.9471 1.42863 22.6503 2.41499 21.891L8.44127 17.252C8.98061 16.8368 9.7319 16.8368 10.2712 17.252L16.585 22.1123C17.5714 22.8716 19 22.1684 19 20.9237V1.5Z"
-                  />
-                </mask>
-                <path
-                  d="M16.585 22.1123L17.805 20.5275L16.585 22.1123ZM8.44127 17.252L7.22128 15.6671L8.44127 17.252ZM10.2712 17.252L9.05126 18.8368L10.2712 17.252ZM2.41499 21.891L3.63497 23.4758L2.41499 21.891ZM1.5 2H17.5V-2H1.5V2ZM2 20.7024V1.5H-2V20.7024H2ZM3.63497 23.4758L9.66125 18.8368L7.22128 15.6671L1.195 20.3062L3.63497 23.4758ZM9.05126 18.8368L15.365 23.6971L17.805 20.5275L11.4912 15.6671L9.05126 18.8368ZM17 1.5V20.9237H21V1.5H17ZM15.365 23.6971C17.6665 25.4688 21 23.8281 21 20.9237H17C17 20.5088 17.4762 20.2744 17.805 20.5275L15.365 23.6971ZM9.66125 18.8368C9.48147 18.9752 9.23104 18.9752 9.05126 18.8368L11.4912 15.6671C10.2328 14.6984 8.47975 14.6984 7.22128 15.6671L9.66125 18.8368ZM-2 20.7024C-2 23.6068 1.33348 25.2475 3.63497 23.4758L1.195 20.3062C1.52379 20.0531 2 20.2874 2 20.7024H-2ZM17.5 2C17.2239 2 17 1.77614 17 1.5H21C21 -0.432997 19.433 -2 17.5 -2V2ZM1.5 -2C-0.433 -2 -2 -0.432992 -2 1.5H2C2 1.77614 1.77615 2 1.5 2V-2Z"
-                  fill="#FFFAFA"
-                  mask="url(#path-1-inside-1_162_18)"
-                />
-              </svg>
-            </div>
-          </button>
-          <Link href="/test">
-            <button className="button-goto-homepage" onClick={onClickGoHome}>
-              홈페이지 바로가기
-            </button>
-          </Link>
         </div>
       </div>
     </div>
+    </>
   );
 }
